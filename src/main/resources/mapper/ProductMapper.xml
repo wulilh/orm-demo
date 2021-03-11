@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.example.demo.dao.ProductMapper">
+<mapper namespace="top.b0x0.demo.mapper.ProductMapper">
 
     <!-- 定义t_product表查询结果与Product对象之间的映射关系 -->
     <resultMap id="productMap" type="Product">

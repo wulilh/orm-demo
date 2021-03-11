@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.b0x0.demo.mapper.ILoginMapper">
+
+    <!-- =================================================
+                使用xml进行数据的CRDU操作 
+      ==================================================-->
+    <resultMap id="map_logingEntity" type="top.b0x0.demo.domain.LoginEntity" >
+          <id property="id"  column="id" />
+          <result property="phone" column="phone"  />
+          <result property="token" column="token" />
+    </resultMap>
+    
+    
+    <sql id="user_login_columns">
+        id,phone,token
+    </sql>
+
+    <!-- keyProperty是Java对象的属性名 MyBatis插入时候获取自增主键方法-->
+   	<insert id="insert" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO  table_user_login
+		(`phone`,`password`,`token`) values
+		(#{phone},#{password},#{token})
+	</insert>
+	
+	
+	<select id="select" resultType="top.b0x0.demo.domain.LoginEntity">
+	    select * from table_user_login  where token = #{token}
+	</select>
+	
+	<!-- 更新密码 -->
+	<update id="update" parameterType = "top.b0x0.demo.domain.LoginEntity">
+	     update table_user_login set
+	     <if test = "password != null ">password = #{password}</if>
+	     where token = #{token}
+	</update>
+	
+	<!-- 删除 #{id} 属性名字要和 {@link IBaseMapper#delect 的参数名字保持一致 }-->
+	<delete id="delete" parameterType="java.lang.String">
+	    delete from table_user_login  where token = #{id}
+	</delete>
+	
+	<!--获取列表  -->
+	<select id="getAll" resultMap="map_logingEntity">
+	    select  
+	    <include refid="user_login_columns"/>
+	    from table_user_login
+	</select>
+
+	
+	
+</mapper>

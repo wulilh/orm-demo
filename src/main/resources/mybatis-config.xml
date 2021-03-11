@@ -20,11 +20,11 @@
     <typeAliases>
         <!-- 配置别名信息，在映射配置文件中可以直接使用Customer这个别名
             代替org.example.domain.Customer这个类 -->
-        <typeAlias type="org.example.demo.domain.Customer" alias="Customer"/>
-        <typeAlias type="org.example.demo.domain.Address" alias="Address"/>
-        <typeAlias type="org.example.demo.domain.Order" alias="Order"/>
-        <typeAlias type="org.example.demo.domain.OrderItem" alias="OrderItem"/>
-        <typeAlias type="org.example.demo.domain.Product" alias="Product"/>
+        <typeAlias type="top.b0x0.demo.domain.Customer" alias="Customer"/>
+        <typeAlias type="top.b0x0.demo.domain.Address" alias="Address"/>
+        <typeAlias type="top.b0x0.demo.domain.Order" alias="Order"/>
+        <typeAlias type="top.b0x0.demo.domain.OrderItem" alias="OrderItem"/>
+        <typeAlias type="top.b0x0.demo.domain.Product" alias="Product"/>
     </typeAliases>
 
     <environments default="development">

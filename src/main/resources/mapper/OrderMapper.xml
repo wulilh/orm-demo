@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.example.demo.dao.OrderMapper">
+<mapper namespace="top.b0x0.demo.mapper.OrderMapper">
 
     <!-- 定义t_order表查询记录与Order对象之间映射 -->
     <resultMap id="orderMap" type="Order">

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.b0x0.demo.mapper.IRegisterMapper">
+
+
+    <!-- 注册 -->
+    <insert id="register" useGeneratedKeys="true" keyProperty="id"
+            parameterType="top.b0x0.demo.domain.LoginEntity">
+        insert into table_user_login (phone, password, token)
+        values (#{phone}, #{password}, #{token})
+    </insert>
+
+    <!-- 批次注册 -->
+    <insert id="registerBatch" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
+        insert into table_user_login (phone, password, token) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.phone},#{item.password},#{item.token})
+        </foreach>
+    </insert>
+
+    <!-- 批次注册 -->
+    <insert id="registerBatch2" useGeneratedKeys="true" keyProperty="id"
+            parameterType="top.b0x0.demo.domain.LoginEntity">
+        insert into table_user_login (phone, password, token) values
+        <foreach collection="list" item="item" index="index" separator=";">
+            (#{item.phone},#{item.password},#{item.token})
+        </foreach>
+    </insert>
+
+    <!-- 批量更新 更新多条记录为多个字段为不同的值  -->
+    <update id="updateBatch2" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update table_user_login
+            <trim prefix="set" suffixOverrides=",">
+                <if test="item.password !=null and item.password!=''">
+                    password = #{item.password},
+                </if>
+                <if test="item.token !=null and item.token!=''">
+                    token = #{item.token}
+                </if>
+            </trim>
+            where phone = #{item.phone}
+        </foreach>
+    </update>
+
+    <update id="updateBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        update table_user_login
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="password = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.password != null">
+                        when phone = #{item.phone} then #{item.password}
+                    </if>
+                    <if test="item.password == null">
+                        when phone = #{item.phone} then table_user_login.password
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where
+        <foreach collection="list" separator="or" item="item" index="index">
+            phone = #{item.phone}
+        </foreach>
+    </update>
+
+
+    <!-- 批量删除 -->
+    <delete id="deleteBatch" parameterType="java.util.List">
+        delete from table_user_login where phone in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item.phone}
+        </foreach>
+    </delete>
+
+
+</mapper>

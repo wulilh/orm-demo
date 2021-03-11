@@ -19,6 +19,7 @@ target/
 *.iml
 *.ipr
 .idea/
+application-native.yml
 
 ### NetBeans ###
 /nbproject/private/

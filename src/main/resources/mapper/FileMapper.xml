@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.b0x0.demo.mapper.IFileMapper">
+
+    <!-- =================================================
+                使用xml进行数据的CRDU操作 
+      ==================================================-->
+   <insert id="insertFile" useGeneratedKeys="true" keyProperty="id" 
+       parameterType="top.b0x0.demo.domain.FileEntity">
+      insert into table_imgs (id, img, path) values (#{id},#{img},#{path})
+   </insert>
+   
+   <insert id="insertFiles" useGeneratedKeys="true" keyProperty="id" 
+        parameterType="java.util.List">
+         insert into table_imgs (id, img, path) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id},#{item.img},#{item.path})
+        </foreach>
+    </insert>
+	
+	<select id="selectFile"  resultType="top.b0x0.demo.domain.FileEntity">
+	   select * from table_imgs where path = #{path}
+	</select>
+	
+</mapper>
