@@ -1,22 +1,16 @@
 package top.b0x0.mybatis;
 
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.b0x0.mybatis.binding.MapperProxyFactory;
 import top.b0x0.mybatis.binding.MapperRegistry;
 import top.b0x0.mybatis.session.SqlSession;
 import top.b0x0.mybatis.session.SqlSessionFactory;
 import top.b0x0.mybatis.session.defaults.DefaultSqlSessionFactory;
-import top.b0x0.mybatis.test.UserDetailMapper;
-import top.b0x0.mybatis.test.UserMapper;
+import top.b0x0.mybatis.test.mapper.UserDetailMapper;
+import top.b0x0.mybatis.test.mapper.UserMapper;
 
-import java.lang.reflect.Proxy;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 public class MapperTests {

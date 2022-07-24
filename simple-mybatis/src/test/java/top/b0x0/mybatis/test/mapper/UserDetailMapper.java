@@ -1,4 +1,4 @@
-package top.b0x0.mybatis.test;
+package top.b0x0.mybatis.test.mapper;
 
 import java.util.Map;
 

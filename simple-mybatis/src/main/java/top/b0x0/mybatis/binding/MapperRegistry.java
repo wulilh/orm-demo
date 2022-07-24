@@ -1,6 +1,7 @@
 package top.b0x0.mybatis.binding;
 
 import cn.hutool.core.lang.ClassScanner;
+import top.b0x0.mybatis.session.Configuration;
 import top.b0x0.mybatis.session.SqlSession;
 
 import java.util.HashMap;
@@ -12,9 +13,12 @@ import java.util.Set;
  **/
 public class MapperRegistry {
 
-    private final Map<Class<?>, MapperProxyFactory<?>> mapperRegistryMap = new HashMap<>();
+    private final Map<Class<?>, MapperProxyFactory<?>> mapperProxyFactoryMap = new HashMap<>();
 
-    public MapperRegistry() {
+    private Configuration config;
+
+    public MapperRegistry(Configuration config) {
+        this.config = config;
     }
 
     public MapperRegistry(String packageName) {
@@ -23,7 +27,7 @@ public class MapperRegistry {
 
     @SuppressWarnings("unchecked")
     public <T> T getMapper(Class<T> clazz, SqlSession sqlSession) {
-        MapperProxyFactory<T> mapperProxyFactory = (MapperProxyFactory<T>) mapperRegistryMap.get(clazz);
+        MapperProxyFactory<T> mapperProxyFactory = (MapperProxyFactory<T>) mapperProxyFactoryMap.get(clazz);
         if (mapperProxyFactory == null) {
             throw new IllegalStateException("mapper " + clazz + " is not registry.");
         }
@@ -36,11 +40,16 @@ public class MapperRegistry {
 
     public void addMapper(Class<?> mapperClass) {
         if (mapperClass.isInterface()) {
-            if (mapperRegistryMap.containsKey(mapperClass)) {
+            if (hasMapper(mapperClass)) {
                 throw new RuntimeException("mapper " + mapperClass + " is already exist.");
             }
-            mapperRegistryMap.put(mapperClass, new MapperProxyFactory<>(mapperClass));
+            mapperProxyFactoryMap.put(mapperClass, new MapperProxyFactory<>(mapperClass));
         }
+    }
+
+
+    public <T> boolean hasMapper(Class<T> type) {
+        return mapperProxyFactoryMap.containsKey(type);
     }
 
     /**
