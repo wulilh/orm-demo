@@ -24,18 +24,6 @@ import java.util.regex.Pattern;
 public class XmlTest {
 
     @Test
-    public void test_resources_getBundle() throws IOException {
-        Enumeration<URL> resources = Thread.currentThread().getContextClassLoader().getResources("mybatis/mapper");
-        while (resources.hasMoreElements()) {
-            URL url = resources.nextElement();
-            String path = url.getPath();
-            System.out.println("path = " + path);
-        }
-
-
-    }
-
-    @Test
     public void test_resources_getResourceAsReaders() throws IOException {
         List<Reader> resourceAsReaders = Resources.getResourceAsReaders("mybatis/mapper");
         System.out.println("resourceAsReaders = " + resourceAsReaders);

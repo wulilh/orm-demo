@@ -29,12 +29,11 @@ public class XMLBuilder extends BaseBuilder {
      */
     private static final Pattern PATTERN_POUND_KEY = Pattern.compile("(#\\{(.*?)})");
 
-    public XMLBuilder(String xmlPackageName) throws IOException {
+    public XMLBuilder(String mapperXmlLocation) throws IOException {
         // 调用父类初始化Configuration
         super(new Configuration());
 
-        List<Reader> readers = Resources.getResourceAsReaders(xmlPackageName);
-
+        List<Reader> readers = Resources.getResourceAsReaders(mapperXmlLocation);
         for (Reader reader : readers) {
             SAXReader saxReader = new SAXReader();
             try {
@@ -82,11 +81,10 @@ public class XMLBuilder extends BaseBuilder {
             ms.setParameterType(parameterType);
             ms.setSql(sql);
             ms.setParameters(parameter);
-            // 添加解析 SQL
+            // 添加解析SQL
             configuration.addMappedStatement(ms);
         }
-
-        // 注册Mapper映射器
+        // 注册Mapper
         configuration.addMapper(Resources.classForName(namespace));
     }
 
