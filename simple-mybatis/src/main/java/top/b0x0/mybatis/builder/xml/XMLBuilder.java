@@ -1,5 +1,6 @@
 package top.b0x0.mybatis.builder.xml;
 
+import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -41,7 +42,8 @@ public class XMLBuilder extends BaseBuilder {
                 Element root = document.getRootElement();
                 parseMapperXml(root);
             } catch (Exception e) {
-                throw new RuntimeException("Error parsing SQL Mapper XML. Cause: " + e, e);
+                e.printStackTrace();
+//                throw new RuntimeException("Error parsing SQL Mapper XML. Cause: " + e, e);
             }
         }
     }
@@ -49,6 +51,8 @@ public class XMLBuilder extends BaseBuilder {
     public void parseMapperXml(Element root) throws Exception {
         // mapper xml文件命名空间
         String namespace = root.attribute(XMLTagAttribute.namespace.name()).getValue();
+        // 注册Mapper
+        configuration.addMapper(Resources.classForName(namespace));
 
         // 所有SQL语句节点
         List<Element> elements = root.elements();
@@ -56,9 +60,16 @@ public class XMLBuilder extends BaseBuilder {
 
             String sqlTypeStr = element.getName();
 
-            String id = element.attribute(XMLTagAttribute.id.name()).getValue();
-            String parameterType = element.attribute(XMLTagAttribute.parameterType.name()).getValue();
-            String resultType = element.attribute(XMLTagAttribute.resultType.name()).getValue();
+            Attribute idAttr = element.attribute(XMLTagAttribute.id.name());
+            if (idAttr == null) {
+                throw new IllegalArgumentException(namespace + " Invalid id attribute is empty ");
+            }
+            String id = idAttr.getValue();
+
+            Attribute parameterTypeAttr = element.attribute(XMLTagAttribute.parameterType.name());
+            String parameterType = parameterTypeAttr == null ? null : parameterTypeAttr.getValue();
+            Attribute resultTypeAttr = element.attribute(XMLTagAttribute.resultType.name());
+            String resultType = resultTypeAttr == null ? null : resultTypeAttr.getValue();
 
             String sql = element.getText();
             // ? 匹配
@@ -72,7 +83,7 @@ public class XMLBuilder extends BaseBuilder {
             }
             MapperStatement ms = new MapperStatement();
             // sql类型
-            ms.setSqlType(SqlType.valueOf(sqlTypeStr.toUpperCase().toUpperCase(Locale.ENGLISH)));
+            ms.setSqlType(SqlType.valueOf(sqlTypeStr.toUpperCase(Locale.ENGLISH)));
             // sql全限定名
             String msId = namespace + "." + id;
             ms.setId(msId);
@@ -84,8 +95,6 @@ public class XMLBuilder extends BaseBuilder {
             // 添加解析SQL
             configuration.addMappedStatement(ms);
         }
-        // 注册Mapper
-        configuration.addMapper(Resources.classForName(namespace));
     }
 
 }

@@ -1,6 +1,7 @@
 package top.b0x0.mybatis.session.defaults;
 
 import top.b0x0.mybatis.binding.MapperRegistry;
+import top.b0x0.mybatis.session.Configuration;
 import top.b0x0.mybatis.session.SqlSession;
 import top.b0x0.mybatis.session.SqlSessionFactory;
 
@@ -9,14 +10,14 @@ import top.b0x0.mybatis.session.SqlSessionFactory;
  **/
 public class DefaultSqlSessionFactory implements SqlSessionFactory {
 
-    private final MapperRegistry mapperRegistry;
+    private final Configuration configuration;
 
-    public DefaultSqlSessionFactory(MapperRegistry mapperRegistry) {
-        this.mapperRegistry = mapperRegistry;
+    public DefaultSqlSessionFactory(Configuration configuration) {
+        this.configuration = configuration;
     }
 
     @Override
     public SqlSession openSession() {
-        return new DefaultSqlSession(mapperRegistry);
+        return new DefaultSqlSession(configuration);
     }
 }

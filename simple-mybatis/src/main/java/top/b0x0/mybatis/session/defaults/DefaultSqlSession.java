@@ -1,6 +1,7 @@
 package top.b0x0.mybatis.session.defaults;
 
 import top.b0x0.mybatis.binding.MapperRegistry;
+import top.b0x0.mybatis.session.Configuration;
 import top.b0x0.mybatis.session.SqlSession;
 
 import java.util.ArrayList;
@@ -12,10 +13,10 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public class DefaultSqlSession implements SqlSession {
 
-    private final MapperRegistry mapperRegistry;
+    private final Configuration configuration;
 
-    public DefaultSqlSession(MapperRegistry mapperRegistry) {
-        this.mapperRegistry = mapperRegistry;
+    public DefaultSqlSession(Configuration configuration) {
+        this.configuration = configuration;
     }
 
     @Override
@@ -44,6 +45,6 @@ public class DefaultSqlSession implements SqlSession {
 
     @Override
     public <T> T getMapper(Class<T> mapperClass) {
-        return mapperRegistry.getMapper(mapperClass, this);
+        return configuration.getMapper(mapperClass, this);
     }
 }
