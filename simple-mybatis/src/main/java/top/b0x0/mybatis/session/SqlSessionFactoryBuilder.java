@@ -11,7 +11,7 @@ import java.io.Reader;
  **/
 public class SqlSessionFactoryBuilder {
 
-    public SqlSessionFactory build(String mapperLocation) throws IOException {
+    public SqlSessionFactory build(String mapperLocation) {
         XMLBuilder xmlBuilder = new XMLBuilder(mapperLocation);
         return build(xmlBuilder.getConfiguration());
     }

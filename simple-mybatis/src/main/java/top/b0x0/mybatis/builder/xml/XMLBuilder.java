@@ -30,11 +30,16 @@ public class XMLBuilder extends BaseBuilder {
      */
     private static final Pattern PATTERN_POUND_KEY = Pattern.compile("(#\\{(.*?)})");
 
-    public XMLBuilder(String mapperXmlLocation) throws IOException {
+    public XMLBuilder(String mapperXmlLocation) {
         // 调用父类初始化Configuration
         super(new Configuration());
 
-        List<Reader> readers = Resources.getResourceAsReaders(mapperXmlLocation);
+        List<Reader> readers = null;
+        try {
+            readers = Resources.getResourceAsReaders(mapperXmlLocation);
+        } catch (Exception e) {
+            throw new RuntimeException("Error get SQL Mapper XML Resource. Cause: " + e, e);
+        }
         for (Reader reader : readers) {
             SAXReader saxReader = new SAXReader();
             try {
@@ -42,8 +47,7 @@ public class XMLBuilder extends BaseBuilder {
                 Element root = document.getRootElement();
                 parseMapperXml(root);
             } catch (Exception e) {
-                e.printStackTrace();
-//                throw new RuntimeException("Error parsing SQL Mapper XML. Cause: " + e, e);
+                throw new RuntimeException("Error parsing SQL Mapper XML. Cause: " + e, e);
             }
         }
     }

@@ -19,7 +19,7 @@ public class MapperTests {
     private static final Logger log = LoggerFactory.getLogger(MapperTests.class);
 
     @Test
-    public void test_proxy() throws IOException {
+    public void test_proxy() {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build("mybatis/mapper");
 
         SqlSession sqlSession = sqlSessionFactory.openSession();

@@ -15,13 +15,13 @@ import java.util.*;
 public class Resources {
     private static final Logger log = LoggerFactory.getLogger(Resources.class);
 
-    public static List<Reader> getResourceAsReaders(String relativePath) throws IOException {
+    public static List<Reader> getResourceAsReaders(String relativePath) {
         List<Reader> readers = new ArrayList<>();
         for (ClassLoader classLoader : getClassLoader()) {
             if (classLoader != null) {
                 URL resource = classLoader.getResource(relativePath);
                 if (resource == null) {
-                    throw new IllegalStateException("Resource " + relativePath + " not found");
+                    throw new RuntimeException("Resource " + relativePath + " not found");
                 }
                 String path = resource.getPath();
                 File file = new File(path);
@@ -32,7 +32,12 @@ public class Resources {
                     if (!isXmlDocument(tempFile)) {
                         continue;
                     }
-                    Reader input = new FileReader(tempFile);
+                    Reader input = null;
+                    try {
+                        input = new FileReader(tempFile);
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
                     readers.add(input);
                 }
                 return readers;
