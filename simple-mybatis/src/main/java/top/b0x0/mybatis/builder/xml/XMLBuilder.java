@@ -7,6 +7,7 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import top.b0x0.mybatis.builder.BaseBuilder;
 import top.b0x0.mybatis.io.Resources;
+import top.b0x0.mybatis.mapping.BoundSql;
 import top.b0x0.mybatis.mapping.MapperStatement;
 import top.b0x0.mybatis.mapping.SqlType;
 import top.b0x0.mybatis.mapping.XMLTagAttribute;
@@ -85,17 +86,18 @@ public class XMLBuilder extends BaseBuilder {
                 parameter.put(i, g2);
                 sql = sql.replace(g1, "?");
             }
+
+            BoundSql boundSql = new BoundSql();
+            boundSql.setResultType(resultType);
+            boundSql.setParameterType(parameterType);
+            boundSql.setSql(sql);
+            boundSql.setParameters(parameter);
+
             MapperStatement ms = new MapperStatement();
-            // sql类型
             ms.setSqlType(SqlType.valueOf(sqlTypeStr.toUpperCase(Locale.ENGLISH)));
-            // sql全限定名
             String msId = namespace + "." + id;
             ms.setId(msId);
 
-            ms.setResultType(resultType);
-            ms.setParameterType(parameterType);
-            ms.setSql(sql);
-            ms.setParameters(parameter);
             // 添加解析SQL
             configuration.addMappedStatement(ms);
         }

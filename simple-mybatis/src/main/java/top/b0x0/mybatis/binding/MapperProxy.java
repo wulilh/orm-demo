@@ -12,11 +12,13 @@ import java.util.Map;
  **/
 public class MapperProxy<T> implements InvocationHandler {
 
-    private final Class<T> mapper;
     private SqlSession sqlSession;
+    private final Class<T> mapper;
+    private final Map<Method, MapperMethod> mapperMethodMap;
 
-    public MapperProxy(Class<T> mapper, SqlSession sqlSession) {
+    public MapperProxy(Class<T> mapper, Map<Method, MapperMethod> mapperMethodMap, SqlSession sqlSession) {
         this.mapper = mapper;
+        this.mapperMethodMap = mapperMethodMap;
         this.sqlSession = sqlSession;
     }
 

@@ -11,13 +11,13 @@ public class MapperStatement {
 
     private Configuration configuration;
 
+    /**
+     * sql全限定名 top.b0x0.mybatis.test.mapper.UserDetailMapper.getUserInfo
+     */
     private String id;
     private SqlType sqlType;
+    private BoundSql boundSql;
 
-    private String parameterType;
-    private String resultType;
-    private String sql;
-    private Map<Integer, String> parameters;
 
     public Configuration getConfiguration() {
         return configuration;
@@ -43,35 +43,11 @@ public class MapperStatement {
         this.sqlType = sqlType;
     }
 
-    public String getParameterType() {
-        return parameterType;
+    public BoundSql getBoundSql() {
+        return boundSql;
     }
 
-    public void setParameterType(String parameterType) {
-        this.parameterType = parameterType;
-    }
-
-    public String getResultType() {
-        return resultType;
-    }
-
-    public void setResultType(String resultType) {
-        this.resultType = resultType;
-    }
-
-    public String getSql() {
-        return sql;
-    }
-
-    public void setSql(String sql) {
-        this.sql = sql;
-    }
-
-    public Map<Integer, String> getParameters() {
-        return parameters;
-    }
-
-    public void setParameters(Map<Integer, String> parameters) {
-        this.parameters = parameters;
+    public void setBoundSql(BoundSql boundSql) {
+        this.boundSql = boundSql;
     }
 }

@@ -70,11 +70,6 @@ public class XmlTest {
             // sql全限定名
             String msId = namespace + "." + id;
             ms.setId(msId);
-
-            ms.setResultType(resultType);
-            ms.setParameterType(parameterType);
-            ms.setSql(sql);
-            ms.setParameters(parameter);
         }
 
     }
