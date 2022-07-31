@@ -92,8 +92,7 @@ public class Resources {
 
     private static ClassLoader[] getClassLoader() {
         ClassLoader[] classLoader = new ClassLoader[]{
-                // TODO: 2022/7/24 system classloader
-//                ClassLoader.getSystemClassLoader(),
+                ClassLoader.getSystemClassLoader(),
                 Thread.currentThread().getContextClassLoader()
         };
         return classLoader;

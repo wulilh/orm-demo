@@ -13,5 +13,7 @@ public enum XMLTagAttribute {
     parameterType,
     resultType,
 
+
+    interceptor,
     ;
 }

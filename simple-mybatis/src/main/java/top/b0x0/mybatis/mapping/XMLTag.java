@@ -7,7 +7,15 @@ package top.b0x0.mybatis.mapping;
  **/
 public enum XMLTag {
 
+    plugins,
+
+    settings,
+
+    environments,
+
+    mappers,
     mapper,
 
+    resultMap,
     ;
 }

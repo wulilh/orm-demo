@@ -12,6 +12,16 @@ public class BoundSql {
 
     private Map<Integer, String> parameters;
 
+    public BoundSql() {
+    }
+
+    public BoundSql(String sql, String parameterType, String resultType, Map<Integer, String> parameters) {
+        this.sql = sql;
+        this.parameterType = parameterType;
+        this.resultType = resultType;
+        this.parameters = parameters;
+    }
+
     public String getSql() {
         return sql;
     }

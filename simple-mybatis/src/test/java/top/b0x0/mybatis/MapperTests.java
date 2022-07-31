@@ -20,16 +20,7 @@ public class MapperTests {
 
     @Test
     public void test_proxy() {
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build("mybatis/mapper");
 
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-
-        // 3. 获取映射器对象
-        UserMapper userDao = sqlSession.getMapper(UserMapper.class);
-
-        // 4. 测试验证
-        String res = userDao.getUsernameById("10001");
-        log.info("测试结果：{}", res);
     }
 
 }
